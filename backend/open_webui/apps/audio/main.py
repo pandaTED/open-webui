@@ -2,6 +2,7 @@ import hashlib
 import json
 import logging
 import os
+import time
 import uuid
 from functools import lru_cache
 from pathlib import Path
@@ -51,9 +52,16 @@ from open_webui.utils.utils import get_admin_user, get_verified_user
 MAX_FILE_SIZE_MB = 25
 MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024  # Convert MB to bytes
 
-
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["AUDIO"])
+
+
+import torch
+
+if torch.cuda.is_available():
+    print(f"Using CUDA on device {torch.cuda.current_device()}")
+else:
+    print("Using CPU")
 
 app = FastAPI(
     docs_url="/docs" if ENV == "dev" else None,
@@ -581,9 +589,19 @@ def transcription(
                         ),
                     )
 
+                begin_1 = time.time()
                 data = transcribe(file_path)
+                end_1 = time.time()
+
+                log.info(f"语音识别花费时间_1: {end_1 - begin_1}")
+
             else:
+
+                begin_1 = time.time()
                 data = transcribe(file_path)
+                end_1 = time.time()
+
+                log.info(f"语音识别花费时间_2: {end_1 - begin_1}")
 
             file_path = file_path.split("/")[-1]
             return {**data, "filename": file_path}

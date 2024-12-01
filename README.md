@@ -1,3 +1,10 @@
+# learning how to use and develop [学习如何使用和如何二次开发]
+
+1. 正在学习此项目中 语音识别和语音合成相关功能的实现， 目的是在中文语言使用时，速度更快，识别准确率更高
+2. 当前tts默认为 浏览器tts 接口，核心为： SpeechSynthesisUtterance
+3. 这是一个非常优秀的项目
+
+
 # Open WebUI 👋
 
 ![GitHub stars](https://img.shields.io/github/stars/open-webui/open-webui?style=social)
